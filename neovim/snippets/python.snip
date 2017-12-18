@@ -1,0 +1,48 @@
+snippet     python
+abbr        initializing python
+options     head
+	#!/usr/bin/env python
+	# coding: utf-8
+	"""
+	${1:#:purpose}
+	
+	===Usage===
+	`expand("%")` <${2:input}> -o <output>
+	
+	===Input===
+	<$2> : ${3:input description}
+	-o <output> : output file name(default:<$2>.${4:out}
+	
+	===Output===
+	<output> : ${5:output description}
+	
+	"""
+	import argparse
+	
+	
+	def parseArgument():
+	    parser = argparse.ArgumentParser(
+	        description="$1"
+	    )
+	    parser.add_argument("$2",
+	                        type=str,
+	                        default=None,
+	                        help="$3")
+	    parser.add_argument("-o", "--output",
+	                        type=str,
+	                        default=None,
+	                        help="output file name")
+	    arguments = parser.parse_args()
+	    if arguments.output is None:
+	        arguments.output = arguments.$2 + ".$4"
+	    return arguments
+	
+	
+	def main():
+	    args = parseArgument()
+	
+	    ${0:pass}
+	
+	
+	if __name__ == "__main__":
+	    main()
