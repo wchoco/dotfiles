@@ -39,7 +39,7 @@ on_ft = ["stylus"]
 
 [[plugins]] # linter runner for python
 repo = "w0rp/ale"
-on_ft = ["python", "javascript"]
+on_ft = ["python", "javascript", "rust"]
 hook_add = """
     let g:ale_sign_error = ">>"
     let g:ale_sign_warning = ">"
@@ -55,11 +55,50 @@ hook_add = """
     let g:ale_linters = {
     \   'python': ['flake8'],
     \   'javascript': ['eslint'],
+    \   'rust': ['rustc', "cargo"],
     \}
+    let g:ale_rust_ignore_error_codes = ["E0463", "E0464"]
     nmap [ale] <Nop>
     nmap <C-k> [ale]
     nmap <silent> [ale]<C-P> <Plug>(ale_previous)
     nmap <silent> [ale]<C-N> <Plug>(ale_next)
     nmap <silent> [ale]<C-l> :highlight<SPACE>ALEError<SPACE>ctermbg=DarkMagenta<CR>
     nmap <silent> [ale]<C-A> <Plug>(ale_toggle)
+    let g:ale_set_highlights = 0
 """
+
+[[plugins]] # rust autocomplete
+repo = "racer-rust/vim-racer"
+on_ft = ["rust"]
+hook_add = """
+    set hidden
+    let g:racer_cmd = expand("~/.cargo/bin/racer")
+    let g:racer_experimental_completer = 1
+    nmap gd <Plug>(rust-def)
+    nmap gs <Plug>(rust-def-split)
+    nmap gx <Plug>(rust-def-vertical)
+    nmap <leader>gd <Plug>(rust-doc)
+"""
+
+[[plugins]] # rust language
+repo = "rust-lang/rust.vim"
+on_ft = ["rust"]
+hook_add = """
+    " let g:rustfmt_autosave = 1
+    " let g:rustfmt_command = "$HOME/.cargo/bin/rustfmt"
+"""
+
+[[plugins]] # javascript
+repo = "othree/yajs.vim"
+on_ft = ["javascript"]
+
+[[plugins]] # javascript autocomplete
+repo = "carlitux/deoplete-ternjs"
+on_ft = ["javascript"]
+hook_add = """
+    let g:deoplete#sources#ternjs#tern_bin = "/usr/local/bin/tern"
+"""
+
+[[plugins]] # glsl
+repo = "tikhomirov/vim-glsl"
+on_ft = ["glsl"]

@@ -29,6 +29,11 @@ colorscheme zellner "カラースキーム
 highlight LineNr ctermfg=darkred "行番号の色
 set backspace=2 "backspaceで削除できるようにする
 
+augroup file_type_indent
+    autocmd!
+    autocmd BufRead,BUfNewFile *.js* setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
 " 最後のカーソル位置を復元する
 if has("autocmd")
     autocmd BufReadPost *
