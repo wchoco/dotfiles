@@ -46,6 +46,11 @@ endif
 nnoremap <silent> <C-j> :set number!<CR>
 nnoremap <silent> <C-p> :set paste!<CR>
 
+" change filetype
+nmap <silent> :ft :set filetype=
+nmap <silent> :glsl :set filetype=glsl<CR>
+nmap <silent> :js :set filetype=javascript<CR>
+
 nnoremap <silent> <C-l> :<C-u>noh<CR><C-l>
 
 nmap [SPACE] <Nop>
