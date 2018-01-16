@@ -10,7 +10,7 @@ cd `dirname $0`
 
 diff ~/.zshrc ../zsh/.zshrc || {
 while true;do
-    echo "Get .zshrc?(Y/n)"
+    echo -e "\033[31;4mGet .zshrc?(Y/n)\033[0m"
     read ans
     case $ans in
         n)
@@ -26,7 +26,7 @@ done
 
 diff ~/.vimrc ../vim/.vimrc || {
 while true;do
-    echo "Get .vimrc?(Y/n)"
+    echo -e "\033[31;4mGet .vimrc?(Y/n)\033[0m"
     read ans
     case $ans in
         n)
@@ -47,7 +47,7 @@ function update(){
         else
             diff ~/.config/nvim/${1}${i} ../neovim/${1}${i} || {
             while true;do
-                echo "Get ~/.config/nvim/${1}${i}?(Y/n)"
+                echo -e "\033[31;4mGet ~/.config/nvim/${1}${i}?(Y/n)\033[0m"
                 read ans
                 case $ans in
                     n)
