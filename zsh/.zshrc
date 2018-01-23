@@ -18,6 +18,15 @@ alias ll="ls -lah"
 alias vi="nvim"
 alias fig="docker-compose"
 alias excel="open -a \"/Applications/Microsoft Excel.app\""
+alias chrome="open -a \"/Applications/Google Chrome.app\""
+
+# function
+function reck() {
+    for arg in $*
+    do
+    python -c "print($arg)"
+    done
+}
 
 # environment
 ## pyenv

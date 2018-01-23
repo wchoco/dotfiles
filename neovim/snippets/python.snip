@@ -20,10 +20,8 @@ options     head
 	import argparse
 	
 	
-	def parseArgument():
-	    parser = argparse.ArgumentParser(
-	        description="$1"
-	    )
+	def parse_argument():
+	    parser = argparse.ArgumentParser(usage=__doc__)
 	    parser.add_argument("$2",
 	                        type=str,
 	                        default=None,
@@ -39,7 +37,7 @@ options     head
 	
 	
 	def main():
-	    args = parseArgument()
+	    args = parse_argument()
 	
 	    ${0:pass}
 	
