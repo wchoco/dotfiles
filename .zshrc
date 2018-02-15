@@ -19,6 +19,7 @@ alias vi="nvim"
 alias fig="docker-compose"
 alias excel="open -a \"/Applications/Microsoft Excel.app\""
 alias chrome="open -a \"/Applications/Google Chrome.app\""
+alias github="open \$(git remote -v | grep push | cut -f2 | cut -d ' ' -f1 | sed -e 's/:[0-9][0-9]*//' -e 's/ssh:\/\/git@/http:\/\//' -e 's/\.git//' -e 's/:[^/]/\//')"
 
 # function
 function reck() {
