@@ -50,9 +50,9 @@ function rust_run() {
 alias rr="rust_run"
 
 # ls
-export LSCOLORS=exfxcxdxbxegedabagacad
+export LSCOLORS=gxfxcxdxbxegedabagacad
 alias ls="ls -GF"
-zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
+zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
 
 # push directory
 setopt auto_pushd #cd -<TAB>
@@ -92,6 +92,11 @@ prompt elite2
 [ -d ~/.config/zsh/zsh-autosuggestions ] ||
     git clone https://github.com/zsh-users/zsh-autosuggestions ~/.config/zsh/zsh-autosuggestions
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# color_command
+[ -d ~/.config/zsh/zsh-syntax-highlighting ] ||
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.config/zsh/zsh-syntax-highlighting
+source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # source
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

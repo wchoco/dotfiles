@@ -55,3 +55,16 @@ options     head
 	===Class===
 	===Function===
 	"""
+
+snippet     function
+abbr        initializing python function
+options     head
+	def ${1:function}(${2:#:argument}):
+	    """
+	    ===Input===
+	    ${3:#:input}
+	    ===Output===
+	    ${4:#:output}
+	    """
+	    ${0:pass}
+
