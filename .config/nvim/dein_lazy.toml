@@ -22,7 +22,12 @@ on_ft = ["toml"]
 repo = "zchee/deoplete-jedi"
 on_ft = ["python"]
 hook_post_source = """
-    let g:deoplete#sources#jedi#show_docstring = 0
+    let g:deoplete#sources#jedi#server_timeout = 50
+    let g:deoplete#sources#jedi#show_docstring = 1
+    let g:deoplete#sources#jedi#worker_threads = 2
+    let g:deoplete#ignore_sources.python =
+      \ ['buffer', 'dictionary', 'member', 'omni', 'tag', 'syntax', 'around'] " file/include conflicting deoplete-jedi
+    autocmd FileType python setlocal completeopt-=preview
 """
 
 [[plugins]] # auto pep8 indent
@@ -55,7 +60,7 @@ hook_add = """
     let g:ale_linters = {
     \   'python': ['flake8'],
     \   'javascript': ['eslint'],
-    \   'rust': ['rustc', "cargo"],
+    \   'rust': ['rustc', 'cargo', 'fustfmt'],
     \}
     let g:ale_rust_ignore_error_codes = ["E0463", "E0464"]
     nmap [ale] <Nop>
@@ -84,7 +89,7 @@ hook_add = """
 repo = "rust-lang/rust.vim"
 on_ft = ["rust"]
 hook_add = """
-    " let g:rustfmt_autosave = 1
+    let g:rustfmt_autosave = 1
     " let g:rustfmt_command = "$HOME/.cargo/bin/rustfmt"
 """
 
