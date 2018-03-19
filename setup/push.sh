@@ -31,6 +31,7 @@ find . -type d -name ".git" -prune -o\
             read ans
             case $ans in
                 y)
+                    mkdir -p backup/`echo $file | sed -e 's!/[^/]*$!!'`
                     cp $HOME/$file backup/$file.$TIMESTAMP
                     mkdir -p `echo $HOME/$file | sed -e "s/[^/]*$//"` > /dev/null 2>&1
                     cp -v $DOTFILESDIR/$file $HOME/$file

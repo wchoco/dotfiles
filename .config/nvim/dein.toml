@@ -93,7 +93,6 @@ hook_add = """
     let g:deoplete#enable_at_startup = 1
     inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
-    inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
     inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
 
     inoremap <expr><C-g>       deoplete#refresh()
@@ -139,6 +138,12 @@ hook_add = """
 repo = 'nixprime/cpsm'
 build = 'env PY3=ON ./install.sh'
 
+[[plugins]] # file recently use
+repo = 'Shougo/neomru.vim'
+
+[[plugins]] # record yank
+repo = 'Shougo/neoyank.vim'
+
 [[plugins]] # file manager
 repo = "Shougo/denite.nvim"
 hook_post_update = """
@@ -156,9 +161,9 @@ hook_add = """
     nmap <silent> [Denite]<C-p> :<C-u>Denite file_rec<CR>
     nmap <silent> [Denite]<C-l> :<C-u>Denite line<CR>
     nmap <silent> [Denite]<C-g> :<C-u>Denite -auto-preview grep<CR>
-    nmap <silent> [Denite]<C-]> :<C-u>DeniteCursorWord grep<CR>
-"     nmap <silent> [Denite]<C-u> :<C-u>Denite file_mru<CR>
-"     nmap <silent> [Denite]<C-y> :<C-u>Denite neoyank<CR>
+    nmap <silent> [Denite]<C-w> :<C-u>DeniteCursorWord grep<CR>
+    nmap <silent> [Denite]<C-u> :<C-u>Denite file_mru<CR>
+    nmap <silent> [Denite]<C-y> :<C-u>Denite neoyank<CR>
     nmap <silent> [Denite]<C-r> :<C-u>Denite -resume<CR>
     nmap <silent> [Denite]; :<C-u>Denite -resume -immediately -select=+1<CR>
     nmap <silent> [Denite], :<C-u>Denite -resume -immediately -select=-1<CR>
