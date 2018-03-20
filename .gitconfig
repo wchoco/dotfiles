@@ -2,7 +2,8 @@
 	name = riku.okajima
 	email = riku.okajima@gmail.com
 [core]
-	editor = vi
+	editor = vim
+	excludesfile = ~/.config/git/gitignore
 [alias]
 	co = checkout
 	st = status
