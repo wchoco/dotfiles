@@ -38,7 +38,7 @@ export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 export PYENV_ROOT="${HOME}/.pyenv"
 export PATH="${PYENV_ROOT}/bin:$PATH"
 hash pyenv 2> /dev/null && eval "$(pyenv init -)"
-## nodebrew
+## nodebrew (curl -L git.io/nodebrew | perl - setup)
 export PATH=${HOME}/.nodebrew/current/bin:$PATH
 ## go
 export GOPATH="${HOME}/go"
