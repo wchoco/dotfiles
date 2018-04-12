@@ -45,6 +45,7 @@ export GOPATH="${HOME}/go"
 export PATH="${HOME}/.local/bin/go/bin:$PATH"
 export PATH="${GOPATH}/bin:$PATH"
 ## rust
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 function rust_run() {
     rustc $1
     local binary=$(basename $1 .rs)
