@@ -15,7 +15,8 @@ setopt inc_append_history
 
 # alias
 alias ll="ls -lah"
-alias vi="nvim"
+alias vi="vim"
+alias v="vim -N -u '~/.config/vim/default.vim'"
 alias fig="docker-compose"
 alias excel="open -a \"/Applications/Microsoft Excel.app\""
 alias chrome="open -a \"/Applications/Google Chrome.app\""

@@ -1,0 +1,106 @@
+[[plugins]] # markdown
+repo = "tpope/vim-markdown"
+on_ft = ["markdown"]
+hook_source = """
+    let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'go', 'javascript', 'vim']
+    let g:markdown_syntax_conceal = 0
+"""
+
+[[plugins]]
+repo = "dhruvasagar/vim-table-mode"
+on_ft = ["markdown"]
+
+[[plugins]] # syntax for toml
+repo = "cespare/vim-toml"
+on_ft = ["toml"]
+
+[[plugins]] # autocomplete for python
+repo = "zchee/deoplete-jedi"
+on_ft = ["python"]
+hook_post_source = """
+    let g:deoplete#sources#jedi#server_timeout = 500
+    let g:deoplete#sources#jedi#show_docstring = 1
+    let g:deoplete#sources#jedi#worker_threads = 2
+    let g:deoplete#ignore_sources.python =
+      \ ['buffer', 'dictionary', 'member', 'omni', 'tag', 'syntax', 'around'] " file/include conflicting deoplete-jedi
+    autocmd FileType python setlocal completeopt-=preview
+"""
+
+[[plugins]] # auto pep8 indent
+repo = "Vimjas/vim-python-pep8-indent"
+on_ft = ["python"]
+
+[[plugins]] # linter
+repo = "neomake/neomake"
+on_ft = ["rust"]
+hook_add = """
+    " call neomake#configure#automake('w')
+    " augroup NeomakeRustConfig
+    "   autocmd!
+    "   autocmd BufWritePost *.rs Neomake! clippy
+    " augroup END
+"""
+
+[[plugins]] # linter runner
+repo = "w0rp/ale"
+on_ft = ["python", "javascript"]
+hook_add = """
+    let g:ale_sign_error = ">>"
+    let g:ale_sign_warning = ">"
+    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+    let g:ale_sign_column_always = 1
+    let g:ale_lint_on_enter = 1
+    let g:ale_lint_on_save = 1
+    let g:ale_lint_on_text_changed = 'never'
+    let g:ale_set_loclist = 0
+    let g:ale_set_quickfix = 0
+    let g:ale_open_list = 0
+    let g:ale_keep_list_window_open = 0
+    let g:ale_linters = {
+    \   'python': ['flake8'],
+    \   'javascript': ['eslint'],
+    \}
+    nmap [ale] <Nop>
+    nmap <C-k> [ale]
+    nmap <silent> [ale]<C-P> <Plug>(ale_previous)
+    nmap <silent> [ale]<C-N> <Plug>(ale_next)
+    nmap <silent> [ale]<C-l> :highlight<SPACE>ALEError<SPACE>ctermbg=DarkMagenta<CR>
+    nmap <silent> [ale]<C-A> <Plug>(ale_toggle)
+    let g:ale_set_highlights = 0
+"""
+
+[[plugins]] # rust autocomplete
+repo = "racer-rust/vim-racer"
+on_ft = ["rust"]
+hook_add = """
+    set hidden
+    let g:racer_cmd = expand("~/.cargo/bin/racer")
+    let g:racer_experimental_completer = 1
+    nmap gd <Plug>(rust-def)
+    nmap gs <Plug>(rust-def-split)
+    nmap gx <Plug>(rust-def-vertical)
+    nmap <leader>gd <Plug>(rust-doc)
+"""
+
+[[plugins]] # rust language
+repo = "rust-lang/rust.vim"
+on_ft = ["rust"]
+hook_add = """
+    let g:rustfmt_autosave = 1
+    " let g:rustfmt_command = "$HOME/.cargo/bin/rustfmt"
+"""
+
+[[plugins]] # javascript
+repo = "othree/yajs.vim"
+on_ft = ["javascript"]
+
+[[plugins]] # javascript autocomplete
+repo = "carlitux/deoplete-ternjs"
+on_ft = ["javascript"]
+hook_add = """
+    let g:deoplete#sources#ternjs#tern_bin = "/usr/local/bin/tern"
+"""
+
+[[plugins]] # glsl
+repo = "tikhomirov/vim-glsl"
+on_ft = ["glsl"]
