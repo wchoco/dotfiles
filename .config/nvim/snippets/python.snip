@@ -1,25 +1,108 @@
-snippet     python
-abbr        initializing python
+snippet     shebang
+options     head
+	#!/usr/bin/env python
+	# coding: utf-8
+
+
+snippet     module
+abbr        initialize python module
 options     head
 	#!/usr/bin/env python
 	# coding: utf-8
 	"""
 	${1:#:purpose}
-	
+	"""
+	__author__ = "Riku Okajima<riku.okajima@gmail.com>"
+	__date__ = "`strftime("%Y-%m-%d")`"
+
+
+snippet     python
+abbr        initialize python
+options     head
+	#!/usr/bin/env python
+	# coding: utf-8
+	"""
+	${1:#:purpose}
+	"""
+	__author__ = "Riku Okajima<riku.okajima@gmail.com>"
+	__date__ = "`strftime("%Y-%m-%d")`"
+	import argparse
+
+
+	def get_args():
+	    """
+	    get arguments from command line
+	    """
+	    parser = argparse.ArgumentParser(usage=__doc__)
+	    ${2}
+	    args = parser.parse_args()
+	    return args
+
+
+	def main(${3}):
+	    """
+	    main function
+	    """
+	    ${0:pass}
+
+
+	if __name__ == "__main__":
+	    args = get_args()
+	    main(vars(args))
+
+
+snippet     argument
+abbr        add argument
+options     head
+	parser.add_argument(
+	    "${1:temp}",
+	    action="${2:store}",
+	    nargs=${3:1},
+	    const=${4:None},
+	    default=${5:None},
+	    type=${6:str},
+	    choices=[${7}],
+	    required=${8:False},
+	    help="${9:help message}"
+	)
+
+
+snippet     outfile
+abbr        add output argument
+options     head
+	parser.add_argument(
+	    "-o", "--outfile",
+	    nargs="?",
+	    type=str,
+	    default=None,
+	    help="output file name"
+	)
+	if args.outfile is None:
+	    args.outfile = args.${1:infile} + ".${2:out}"
+
+
+snippet     prototype
+abbr        prototype of python script
+options     head
+	#!/usr/bin/env python
+	# coding: utf-8
+	"""
+	${1:#:purpose}
+
 	===Usage===
 	`expand("%:t")` <${2:input}> -o <output>
-	
+
 	===Input===
 	<$2> : ${3:input description}
 	-o <output> : output file name(default:<$2>.${4:out})
-	
+
 	===Output===
 	<output> : ${5:output description}
-	
+
 	"""
 	import argparse
-	
-	
+
+
 	def parse_argument():
 	    parser = argparse.ArgumentParser(usage=__doc__)
 	    parser.add_argument("$2",
@@ -34,27 +117,16 @@ options     head
 	    if arguments.output is None:
 	        arguments.output = arguments.$2 + ".$4"
 	    return arguments
-	
-	
+
+
 	def main():
 	    args = parse_argument()
-	
+
 	    ${0:pass}
-	
-	
+
+
 	if __name__ == "__main__":
 	    main()
-
-snippet     module
-abbr        initializing python module
-options     head
-	#!/usr/bin/env python
-	# coding: utf-8
-	"""
-	${1:#:purpose}
-	===Class===
-	===Function===
-	"""
 
 snippet     function
 abbr        initializing python function
@@ -76,19 +148,19 @@ options     head
 	# coding: utf-8
 	"""
 	For ${1:`substitute(substitute(expand("%:p"), "/[^/]*/[^/]*$", "", "g"), ".*/", "", "g")`} competition
-	
+
 	Author: Riku Okajima
 	Created: `strftime("%Y-%m-%d")`
 	"""
-	
+
 	import numpy as np
 	import matplotlib.pyplot as plt
 	import pandas as pd
 	from tqdm import tqdm
 	from logging import (getLogger, DEBUG, INFO,
 	                     StreamHandler, FileHandler, Formatter)
-	
-	
+
+
 	def get_logger(name, out=None):
 	    formatter = Formatter(
 	        "%(asctime)s:%(levelname)s:%(name)s::%(funcName)s::%(message)s")
@@ -104,6 +176,6 @@ options     head
 	        handler.setFormatter(formatter)
 	        logger.addHandler(handler)
 	    return logger
-	
-	
+
+
 	${0:pass}
