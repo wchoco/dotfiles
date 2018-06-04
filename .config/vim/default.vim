@@ -92,6 +92,7 @@ nnoremap [SPACE]s :<C-u>sp<CR>
 nnoremap [SPACE]v :<C-u>vs<CR>
 """ quit & save
 nnoremap [SPACE]q :<C-u>q<CR>
+nnoremap [SPACE]z :<C-u>w<CR>
 nnoremap [SPACE]Q :<C-u>bd<CR>
 nnoremap [SPACE]W :<C-u>wall<CR>
 
