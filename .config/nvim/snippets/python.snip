@@ -26,6 +26,7 @@ options     head
 	"""
 	__author__ = "Riku Okajima<riku.okajima@gmail.com>"
 	__date__ = "`strftime("%Y-%m-%d")`"
+
 	import argparse
 
 
@@ -33,22 +34,21 @@ options     head
 	    """
 	    get arguments from command line
 	    """
-	    parser = argparse.ArgumentParser(usage=__doc__)
-	    ${2}
+	    parser = argparse.ArgumentParser(description=__doc__)
+	    ${0}
 	    args = parser.parse_args()
 	    return args
 
 
-	def main(${3}):
+	def main():
 	    """
 	    main function
 	    """
-	    ${0:pass}
+	    pass
 
 
 	if __name__ == "__main__":
-	    args = get_args()
-	    main(vars(args))
+	    main(**vars(get_args()))
 
 
 snippet     argument
@@ -63,7 +63,7 @@ options     head
 	    type=${6:str},
 	    choices=[${7}],
 	    required=${8:False},
-	    help="${9:help message}"
+	    help="${0:help message}"
 	)
 
 
@@ -78,7 +78,47 @@ options     head
 	    help="output file name"
 	)
 	if args.outfile is None:
-	    args.outfile = args.${1:infile} + ".${2:out}"
+	    args.outfile = args.${1:infile} + ".${0:out}"
+
+
+snippet     test
+abbr        test code
+options     head
+	#!/usr/bin/env python
+	# coding: utf-8
+	"""
+	${1:#:purpose}
+	"""
+	__author__ = "Riku Okajima<riku.okajima@gmail.com>"
+	__date__ = "`strftime("%Y-%m-%d")`"
+
+	import unittest
+
+
+	class ${2:My}Test(unittest.TestCase):
+
+	    def setUp(self):
+	        """
+	        prepare the test fixture
+	        """
+	        pass
+
+	    def tearDown(self):
+	        """
+	        called after test function
+	        """
+	        pass
+
+	    def test_${0:main}(self):
+	        """
+	        main test
+	        """
+	        pass
+
+
+	if __name__ == '__main__':
+	    unittest.main()
+
 
 
 snippet     log_start_end
