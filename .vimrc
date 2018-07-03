@@ -1,5 +1,3 @@
-let g:python3_host_prog = expand('~/.pyenv/shims/python')
-
 function! s:source_rc(path)
     let s:confdir = expand('~/.config/vim')
     if filereadable(expand(s:confdir . a:path))
