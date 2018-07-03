@@ -10,3 +10,4 @@
 	br = branch
 	ci = commit
 	tree = log --graph --oneline
+	wt = worktree

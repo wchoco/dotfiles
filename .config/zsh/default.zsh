@@ -1,6 +1,8 @@
 # environment
 export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>."
 export FPATH="${HOME}/.config/zsh/site-functions:${FPATH}"
+export LOCAL_PATH="${HOME}/local"
+export PATH="${LOCAL_PATH}/bin:${PATH}"
 
 
 # alias
@@ -18,6 +20,16 @@ alias vscode='open -a "Visual Studio Code"'
 function gitignore() {
     curl -s https://www.gitignore.io/api/`echo "$*" | sed -e "s/ /,/"`
 }
+
+function svi() {
+    vi `which $1`
+}
+
+function gwt() {
+    GIT_CDUP_DIR=`git rev-parse --show-cdup`
+    git worktree add ${GIT_CDUP_DIR}git-worktrees/$1 $1
+}
+
 
 
 # history
