@@ -13,19 +13,34 @@ hook_add = """
         \ 'colorscheme': 'wombat',
         \ 'mode_map': {'c': 'NORMAL'},
         \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+        \   'right': [ [ 'lineinfo' ], ['percent'], [ 'ale_error', 'ale_warning', 'ale_ok', 'char_code', 'fileencoding', 'filetype' ] ]
         \ },
         \ 'component_function': {
         \   'modified': 'LightlineModified',
         \   'readonly': 'LightlineReadonly',
         \   'fugitive': 'LightlineFugitive',
         \   'filename': 'LightlineFilename',
-        \   'fileformat': 'LightlineFileformat',
         \   'filetype': 'LightlineFiletype',
         \   'fileencoding': 'LightlineFileencoding',
-        \   'mode': 'LightlineMode'
-        \ }
-        \ }
+        \   'mode': 'LightlineMode',
+        \   'char_code': 'LightLineCharCode'
+        \ },
+        \ 'component_expand': {
+        \   'ale_error': 'LightLineAleError',
+        \   'ale_warning': 'LightLineAleWarning',
+        \   'ale_ok': 'LightLineAleOk',
+        \ },
+        \ 'component_type': {
+        \   'ale_error': 'error',
+        \   'ale_waring': 'waring',
+        \   'ale_ok': 'ok',
+        \ },
+    \ }
+    augroup LightLineOnALE
+      autocmd!
+      autocmd User ALELint call lightline#update()
+    augroup END
 
     function! LightlineModified()
       return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -36,12 +51,19 @@ hook_add = """
     endfunction
 
     function! LightlineFilename()
-      return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-            \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-            \  &ft == 'unite' ? unite#get_status_string() :
-            \  &ft == 'vimshell' ? vimshell#get_status_string() :
-            \ '' != expand('%') ? expand('%:~') : '[No Name]') .
-            \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+      if winwidth(0) > 120
+        return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+              \ (&ft == 'denite' ? LightLineDenite() :
+              \  &ft == 'vimshell' ? vimshell#get_status_string() :
+              \ '' != expand('%') ? expand('%:~') : '[No Name]') .
+              \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+      else
+        return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+              \ (&ft == 'denite' ? LightLineDenite() :
+              \  &ft == 'vimshell' ? vimshell#get_status_string() :
+              \ '' != expand('%') ? expand('%:t') : '[No Name]') .
+              \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+      endif
     endfunction
 
     function! LightlineFugitive()
@@ -52,20 +74,76 @@ hook_add = """
       endif
     endfunction
 
-    function! LightlineFileformat()
-      return winwidth(0) > 70 ? &fileformat : ''
+    function! LightLineDenite()
+      let mode_str = substitute(denite#get_status_mode(), "-\\| ", "", "g")
+      call lightline#link(tolower(mode_str[0]))
+      return mode_str
     endfunction
 
     function! LightlineFiletype()
-      return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+      return winwidth(0) > 60 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
     endfunction
 
     function! LightlineFileencoding()
-      return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+      return winwidth(0) > 60 ? (&fenc !=# '' ? &fenc : &enc) : ''
     endfunction
 
     function! LightlineMode()
-      return winwidth(0) > 60 ? lightline#mode() : ''
+      return winwidth(0) > 60 ? lightline#mode() : lightline#mode()[0]
+    endfunction
+
+    function! LightLineCharCode() abort
+      if winwidth(0) <= 120
+        return ''
+      endif
+      " if char on cursor is `Λ̊`, :ascii returns below.
+      " <Λ> 923, 16進数 039b, 8進数 1633 < ̊> 778, 16進数 030a, 8進数 1412
+      redir => l:tmp | silent! ascii | redir END
+      let l:chars = []
+      call substitute(l:tmp, '<.>\s\+\d\+,\s\+\S\+ \x\+,\s\+\S\+ \d\+', '\=add(l:chars, submatch(0))', 'g')
+      if len(l:chars) == 0
+        return ''
+      endif
+      let l:ascii = []
+      for l:c in l:chars
+        let l:m = matchlist(l:c, '<\(.\)>\s\+\d\+,\s\+\S\+ \(\x\+\)')
+        if len(l:m) > 0
+          call add(l:ascii, printf('%s %s', l:m[1], l:m[2]))
+        endif
+      endfor
+      return join(l:ascii, ', ')
+    endfunction
+
+    function! LightLineAleError() abort
+      return s:ale_string(0)
+    endfunction
+
+    function! LightLineAleWarning() abort
+      return s:ale_string(1)
+    endfunction
+
+    function! LightLineAleOk() abort
+      return s:ale_string(2)
+    endfunction
+
+    function! s:ale_string(mode)
+      if !exists('g:ale_buffer_info')
+        return ''
+      endif
+
+      let l:buffer = bufnr('%')
+      let l:counts = ale#statusline#Count(l:buffer)
+      let [l:error_format, l:warning_format, l:no_errors] = g:ale_statusline_format
+
+      if a:mode == 0 " Error
+        let l:errors = l:counts.error + l:counts.style_error
+        return l:errors ? printf(l:error_format, l:errors) : ''
+      elseif a:mode == 1 " Warning
+        let l:warnings = l:counts.warning + l:counts.style_warning
+        return l:warnings ? printf(l:warning_format, l:warnings) : ''
+      endif
+
+      return l:counts.total == 0? l:no_errors: ''
     endfunction
 """
 
@@ -81,10 +159,10 @@ hook_add = """
 [[plugins]] # comment out
 repo = "tyru/caw.vim"
 hook_add = """
-    nmap <Leader>, <Plug>(caw:hatpos:toggle)
-    vmap <Leader>, <Plug>(caw:hatpos:toggle)
-    nmap <Leader>c <Plug>(caw:zeropos:toggle)
-    vmap <Leader>c <Plug>(caw:zeropos:toggle)
+    nmap <Leader>c <Plug>(caw:hatpos:toggle)
+    vmap <Leader>c <Plug>(caw:hatpos:toggle)
+    nmap <Leader>, <Plug>(caw:zeropos:toggle)
+    vmap <Leader>, <Plug>(caw:zeropos:toggle)
 """
 
 [[plugins]] # auto-complete
@@ -154,7 +232,7 @@ repo = "Shougo/denite.nvim"
 hook_post_update = """
     if executable('rg')
       call denite#custom#var('file_rec', 'command',
-            \ ['rg', '--files', '--glob', '!.git'])
+            \ ['rg', '--files', '--glob', '!.git' '--glob', '!__pycache__'])
       call denite#custom#var('grep', 'command', ['rg'])
     endif
     call denite#custom#source('file_rec', 'matchers', ['matcher_cpsm'])
@@ -162,23 +240,40 @@ hook_post_update = """
 hook_add = """
     nmap [Denite] <Nop>
     nmap <C-u> [Denite]
+    nmap <silent> [Denite]<C-u> <Nop>
     nmap <silent> [Denite]<C-t> :<C-u>Denite filetype<CR>
-    nmap <silent> [Denite]<C-p> :<C-u>Denite file_rec<CR>
+    nmap <silent> [Denite]<C-p> :<C-u>DeniteProjectDir file_rec<CR>
+    nmap <silent> [Denite]<C-f> :<C-u>DeniteBufferDir file_rec<CR>
+    nmap <silent> [Denite]<C-d> :<C-u>DeniteProjectDir directory_rec<CR>
+    nmap <silent> [Denite]<C-b> :<C-u>Denite buffer<CR>
     nmap <silent> [Denite]<C-l> :<C-u>Denite line<CR>
-    nmap <silent> [Denite]<C-g> :<C-u>Denite -auto-preview grep<CR>
+    nmap <silent> [Denite]<C-g> :<C-u>DeniteProjectDir grep<CR>
     nmap <silent> [Denite]<C-w> :<C-u>DeniteCursorWord grep<CR>
-    nmap <silent> [Denite]<C-u> :<C-u>Denite file_mru<CR>
+    nmap <silent> [Denite]<C-m> :<C-u>Denite file_mru<CR>
     nmap <silent> [Denite]<C-y> :<C-u>Denite neoyank<CR>
     nmap <silent> [Denite]<C-r> :<C-u>Denite -resume<CR>
     nmap <silent> [Denite]; :<C-u>Denite -resume -immediately -select=+1<CR>
     nmap <silent> [Denite], :<C-u>Denite -resume -immediately -select=-1<CR>
-    nmap <silent> [Denite]<C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
+    nmap <silent> [Denite]<C-h> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~']}])<CR>
+
+    " customize rc
+    let s:menus = {}
+    let s:menus.rc = {'description': 'rc files'}
+    let s:menus.rc.file_candidates = [\
+        ['zshrc', '~/.zshrc'],\
+        ['zshrc.local', '~/.zshrc.local'],\
+        ['vimrc', '~/.vimrc'],\
+        ['config', '~/.config']\
+    ]
+    call denite#custom#var('menu', 'menus', s:menus)
+    nmap <silent> [Denite]<C-s> :<C-u>Denite menu:rc<CR>
+
     " customize ignore globs
-    call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy','matcher_ignore_globs'])
+    call denite#custom#source('file_rec', 'matchers', ['matcher_ignore_globs', 'matcher_cpsm'])
     call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
           \ [
           \ '.git/', 'build/', '__pycache__/',
-          \ 'images/', '*.o', '*.make',
+          \ 'images/', '*.o', '*.make', '*.pyc',
           \ '*.min.*', 'node_modules/',
           \ 'img/', 'fonts/'])
 """
@@ -187,12 +282,10 @@ hook_add = """
 [[plugins]] # git cliant
 repo = "tpope/vim-fugitive"
 hook_add = """
-    nmap [figitive] <Nop>
-    map <Leader>g [figitive]
-    nmap <silent> [figitive]s :<C-u>Gstatus<CR>
-    nmap <silent> [figitive]d :<C-u>Gdiff<CR>
-    nmap <silent> [figitive]b :<C-u>Gblame<CR>
-    nmap <silent> [figitive]l :<C-u>Glog<CR>
+    nmap <silent> <Leader>s :<C-u>Gstatus<CR>
+    nmap <silent> <Leader>d :<C-u>Gdiff<CR>
+    nmap <silent> <Leader>b :<C-u>Gblame<CR>
+    nmap <silent> <Leader>l :<C-u>Glog<CR>
 """
 
 [[plugins]] # show git change
@@ -223,3 +316,6 @@ repo = "Shougo/neosnippet-snippets"
 
 [[plugins]] # show space
 repo = "bronson/vim-trailing-whitespace"
+
+[[plugins]] # manage bracket
+repo = "machakann/vim-sandwich"
