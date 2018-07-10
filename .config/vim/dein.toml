@@ -24,6 +24,13 @@ hook_add = """
     vmap <Leader>, <Plug>(caw:zeropos:toggle)
 """
 
+[[plugins]] # echo complete to cmd line
+repo = "Shougo/echodoc.vim"
+hook_add = """
+    let g:echodoc_enable_at_startup = 1
+    set shortmess+=c
+"""
+
 [[plugins]] # auto-complete
 repo = "Shougo/deoplete.nvim"
 hook_add = """
