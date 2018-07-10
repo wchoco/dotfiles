@@ -56,7 +56,7 @@ fadd() {
 
 # fz - mru
 ## git clone https://github.com/rupa/z.git ${LOCAL_PATH}/src/z
-source ${LOCAL_PATH}/src/z/z.sh
+[ -f ${LOCAL_PATH}/src/z/z.sh ] && source ${LOCAL_PATH}/src/z/z.sh
 fz() {
     local res=$(z | sort -rn | cut -c 12- | fzf)
     if [ -n "$res" ]; then
