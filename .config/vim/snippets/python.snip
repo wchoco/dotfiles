@@ -28,6 +28,42 @@ options     head
 	__date__ = "`strftime("%Y-%m-%d")`"
 
 	import argparse
+	from typing import List, Optional
+
+
+	def get_args(argv: Optional[List[str]]=None) -> argparse.Namespace:
+	    """
+	    get arguments from command line
+	    """
+	    parser = argparse.ArgumentParser(description=__doc__)
+	    ${0}
+	    args = parser.parse_args(argv)
+	    return args
+
+
+	def main() -> None:
+	    """
+	    main function
+	    """
+	    pass
+
+
+	if __name__ == "__main__":
+	    main(**vars(get_args()))
+
+
+snippet     python2
+abbr        initialize python
+options     head
+	#!/usr/bin/env python
+	# coding: utf-8
+	"""
+	${1:#:purpose}
+	"""
+	__author__ = "Riku Okajima<riku.okajima@gmail.com>"
+	__date__ = "`strftime("%Y-%m-%d")`"
+
+	import argparse
 
 
 	def get_args():
