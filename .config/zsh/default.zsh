@@ -6,9 +6,9 @@ export PATH="${LOCAL_PATH}/bin:${PATH}"
 
 
 # alias
-alias vi="vim"
-alias v="vim -N -u '~/.config/vim/default.vim'"
-alias tm="tmux"
+alias vi="nvim"
+alias v="nvim -N -u '~/.config/vim/default.vim'"
+alias tm="tmux -u"
 alias fig="docker-compose"
 alias excel="open -a \"/Applications/Microsoft Excel.app\""
 alias chrome="open -a \"/Applications/Google Chrome.app\""
@@ -49,7 +49,7 @@ setopt inc_append_history
 
 
 # ls
-alias ls="ls -GF"
+alias ls="ls -F"
 alias ll="ls -lah"
 alias l="/bin/ls"
 export LSCOLORS=cxfxexdxbxegedabagacad

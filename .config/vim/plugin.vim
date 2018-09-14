@@ -1,4 +1,4 @@
-let g:python3_host_prog = expand('~/.pyenv/shims/python')
+let g:python3_host_prog = expand('/usr/bin/python')
 
 " dein.vimインストール時に指定したディレクトリをセット
 let s:dein_dir = expand('~/.cache/dein')

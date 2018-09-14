@@ -3,7 +3,7 @@
 ## ${LOCAL_PATH}/src/fzf/install
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+export FZF_DEFAULT_COMMAND='find . -type f'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
 # fbr - checkout git branch (including remote branches)

@@ -6,8 +6,8 @@ function source_rc() {
 
 source_rc default.zsh
 source_rc plugin.zsh
-source_rc python.zsh
-source_rc rust.zsh
-source_rc go.zsh
-source_rc node.zsh
+# source_rc python.zsh
+# source_rc rust.zsh
+# source_rc go.zsh
+# source_rc node.zsh
 source_rc fzf.zsh
