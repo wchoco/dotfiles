@@ -14,16 +14,18 @@ function ask() {
         git clone https://github.com/junegunn/fzf.git ${LOCAL_PATH}/src/fzf
         ${LOCAL_PATH}/src/fzf/install
     }
-    ! exist z && ask 'install z?' && {
-        git clone https://github.com/rupa/z.git ${LOCAL_PATH}/src/z
+    TARGET="${LOCAL_PATH}/zsh/z"
+    [ ! -d ${TARGET} ] && ask 'install z?' && {
+        git clone https://github.com/rupa/z.git ${TARGET}
     }
 }
 : 'install zsh-autosuggestions plugin' && {
     TARGET="${HOME}/.config/zsh/zsh-autosuggestions"
     [ ! -d ${TARGET} ] && ask 'install zsh-autosuggestions?' && \
-        git clone https://github.com/zsh-users/zsh-autosuggestions ~/.config/zsh/zsh-autosuggestions
+        git clone https://github.com/zsh-users/zsh-autosuggestions ${TARGET}
 }
 : 'install zsh-syntax-highlighting plugin' && {
-    [ ! -d ~/.config/zsh/zsh-syntax-highlighting ] && ask 'install zsh-syntax-highlighting?' && \
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.config/zsh/zsh-syntax-highlighting
+    TARGET=~/.config/zsh/zsh-syntax-highlighting
+    [ ! -d ${TARGET} ] && ask 'install zsh-syntax-highlighting?' && \
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${TARGET}
 }
