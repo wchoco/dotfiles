@@ -23,13 +23,6 @@ function gitignore() {
     curl -s https://www.gitignore.io/api/`echo "$*" | sed -e "s/ /,/"`
 }
 
-function ask() {
-    read -q "?${1} [y/N]"
-    ret=$?
-    echo
-    return $ret
-}
-
 
 # history
 export HISTFILE=${HOME}/.zsh_history

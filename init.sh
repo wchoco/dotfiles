@@ -1,4 +1,14 @@
-#!/bin/bash -eux
+#!/bin/zsh
+function exist() {
+    command -v $1 > /dev/null 2>&1
+}
+function ask() {
+    read -q "?${1} [y/N]"
+    ret=$?
+    echo
+    return $ret
+}
+
 : 'install fzf' && {
     ! exist fzf && ask 'install fzf?' && {
         git clone https://github.com/junegunn/fzf.git ${LOCAL_PATH}/src/fzf
