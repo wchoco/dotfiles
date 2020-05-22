@@ -6,4 +6,3 @@ function! s:source_rc(path)
 endfunction
 
 call s:source_rc('/default.vim')
-call s:source_rc('/plugin.vim')

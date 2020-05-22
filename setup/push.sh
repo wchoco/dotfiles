@@ -4,7 +4,7 @@ DIFFCOMMAND=$1
 if [ -z "$DIFFCOMMAND" ]; then
     DIFFCOMMAND="diff -u"
 fi
-DOTFILESDIR="$HOME/dotfiles"
+DOTFILESDIR="$HOME/dev/dotfiles"
 TIMESTAMP=`date "+%Y%m%d_%H%M%S"`
 
 cd $DOTFILESDIR
