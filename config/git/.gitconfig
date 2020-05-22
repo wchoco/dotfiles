@@ -1,0 +1,13 @@
+[user]
+	name = riku.okajima
+	email = riku.okajima@gmail.com
+[core]
+	editor = vim
+	excludesfile = ~/.config/dotfiles/config/git/.gitignore
+[alias]
+	co = checkout
+	st = status
+	br = branch
+	ci = commit
+	tree = log --graph --oneline
+	wt = worktree

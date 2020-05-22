@@ -1,8 +1,4 @@
-function! s:source_rc(path)
-    let s:confdir = expand('~/.config/vim')
-    if filereadable(expand(s:confdir . a:path))
-        execute 'source' s:confdir . a:path
-    endif
-endfunction
-
-call s:source_rc('/default.vim')
+let s:start_path = expand('~/.config/dotfiles/config/vim/.vimrc')
+if filereadable(s:start_path)
+    execute 'source' s:start_path
+endif
