@@ -4,9 +4,10 @@ function source_rc() {
     [ -f ${CONFIG_DIR}/$1 ] && source ${CONFIG_DIR}/$1
 }
 
-source_rc default.zsh
+source_rc base.zsh
+source_rc prompt.zsh
 source_rc plugin.zsh
-source_rc python.zsh
-source_rc rust.zsh
-source_rc go.zsh
-source_rc node.zsh
+source_rc fzf.zsh
+source_rc programs/anyenv.zsh
+source_rc programs/rust.zsh
+[ -f ${HOME}/.zshrc.local ] && source ${HOME}/.zshrc.local

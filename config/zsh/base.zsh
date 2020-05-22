@@ -1,32 +1,39 @@
 # environment
-export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>."
-export FPATH="${HOME}/.config/zsh/site-functions:${FPATH}"
 export LOCAL_PATH="${HOME}/.local"
 export PATH="${LOCAL_PATH}/bin:${PATH}"
+export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>."
 
 
 # alias
 alias vi="vim"
 alias tm="tmux"
-alias excel="open -a \"/Applications/Microsoft Excel.app\""
 alias chrome="open -a \"/Applications/Google Chrome.app\""
-alias github="open \$(git remote -v | grep push | cut -f2 | cut -d ' ' -f1 | sed -e 's/:[0-9][0-9]*//' -e 's/ssh:\/\/git@/http:\/\//' -e 's/\.git//' -e 's/:[^/]/\//')"
 
 
 # function
+function exist() {
+    command -v $1 > /dev/null 2>&1
+}
+
+function deref() {
+    $1 `which $2`
+}
+
 function gitignore() {
     curl -s https://www.gitignore.io/api/`echo "$*" | sed -e "s/ /,/"`
 }
 
-function svi() {
-    vi `which $1`
+function ask() {
+    read -q "?${1} [y/N]"
+    ret=$?
+    echo
+    return $ret
 }
 
 
 # history
-function history_all { history -E 1 }
 export HISTFILE=${HOME}/.zsh_history
-export HISTSIZE=1000 # memory limit
+export HISTSIZE=10000 # memory limit
 export SAVEHIST=1000000 # history limit
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY # record start and finish
@@ -40,9 +47,9 @@ setopt inc_append_history
 
 
 # ls
-alias ls="exa -F"
-alias ll="exa -Fal"
-alias tree="exa -T"
+alias ls="ls -GF"
+alias ll="ls -lah"
+alias l="/bin/ls"
 
 # push directory
 setopt auto_pushd #cd -<TAB>
@@ -74,15 +81,3 @@ bindkey -M viins '^P'  up-line-or-history
 bindkey -M viins '^R'  history-incremental-pattern-search-backward
 bindkey -M viins '^U'  backward-kill-line
 bindkey -M viins '^W'  backward-kill-word
-
-
-# prompt
-autoload -U promptinit
-promptinit
-prompt chocomint
-
-# anyenv
-eval "$(anyenv init -)"
-
-# source
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
