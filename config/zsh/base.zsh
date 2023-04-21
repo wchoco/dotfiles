@@ -40,7 +40,7 @@ setopt inc_append_history
 
 
 # ls
-alias ls="ls -GF"
+alias ls="ls -GF --color=auto"
 alias ll="ls -lah"
 alias l="/bin/ls"
 
