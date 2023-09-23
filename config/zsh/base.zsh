@@ -7,7 +7,6 @@ export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>."
 # alias
 alias vi="vim"
 alias tm="tmux"
-alias chrome="open -a \"/Applications/Google Chrome.app\""
 
 
 # function

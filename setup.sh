@@ -8,4 +8,11 @@
     cp $ENTRYPOINTS_DIR/.tmux.conf $HOME/.tmux.conf
     cp $ENTRYPOINTS_DIR/.vimrc $HOME/.vimrc
     cp $ENTRYPOINTS_DIR/.zshrc $HOME/.zshrc
+
+
+    : "gdb settings" && {
+        if command -v gdb > /dev/null; then
+            cp $ENTRYPOINTS_DIR/.gdbinit $HOME/.gdbinit
+        fi
+    }
 }
