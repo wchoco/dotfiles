@@ -8,6 +8,5 @@ source_rc base.zsh
 source_rc prompt.zsh
 source_rc plugin.zsh
 source_rc fzf.zsh
-source_rc programs/anyenv.zsh
-source_rc programs/rust.zsh
+source_rc zoxide.zsh
 [ -f ${HOME}/.zshrc.local ] && source ${HOME}/.zshrc.local

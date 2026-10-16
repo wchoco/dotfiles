@@ -6,7 +6,6 @@ export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>."
 
 # alias
 alias vi="vim"
-alias tm="tmux"
 
 
 # function

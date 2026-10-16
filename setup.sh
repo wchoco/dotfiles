@@ -5,7 +5,6 @@
 : "copy entrypoints" && {
     ENTRYPOINTS_DIR="entrypoints"
     cp $ENTRYPOINTS_DIR/.gitconfig $HOME/.gitconfig
-    cp $ENTRYPOINTS_DIR/.tmux.conf $HOME/.tmux.conf
     cp $ENTRYPOINTS_DIR/.vimrc $HOME/.vimrc
     cp $ENTRYPOINTS_DIR/.zshrc $HOME/.zshrc
 }
