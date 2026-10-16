@@ -1,6 +1,11 @@
 # PowerShell profile (dot-sourced from $PROFILE by setup.ps1)
 $DotfilesRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 
+# keymap
+if (Get-Module -ListAvailable PSReadLine) {
+    Set-PSReadLineOption -EditMode Emacs
+}
+
 # zellij
 # config.kdl is shared with Linux. It does not set default_shell, so zellij
 # uses $env:SHELL; set it to the running PowerShell only while zellij starts.
@@ -16,3 +21,4 @@ function zellij {
         $env:ZELLIJ_CONFIG_FILE = $prevConfig
     }
 }
+Set-Alias zj zellij

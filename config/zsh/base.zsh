@@ -6,6 +6,7 @@ export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>."
 
 # alias
 alias vi="vim"
+alias zj="zellij"
 
 
 # function
