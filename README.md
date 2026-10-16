@@ -12,6 +12,8 @@ git clone git@github.com:wchoco/dotfiles.git ~/.config/dotfiles
 
 リポジトリは `~/.config/dotfiles` に置く前提（`.zshrc` が参照する）。
 
+`init.sh` で入れたツールは `init.sh update` でまとめて更新できる。apt などで入れたツールは対象外。
+
 `setup.sh` は何度実行してもよい。リンク先に既存のファイルがあれば `backup/<日時>/` に退避する。
 
 ## 管理しているもの
