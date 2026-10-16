@@ -9,4 +9,5 @@ source_rc prompt.zsh
 source_rc plugin.zsh
 source_rc fzf.zsh
 source_rc zoxide.zsh
+[ -n "${WSL_DISTRO_NAME}" ] && source_rc wsl.zsh
 [ -f ${HOME}/.zshrc.local ] && source ${HOME}/.zshrc.local
