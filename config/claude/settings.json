@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "skillOverrides": {
+    "news-speaker": "off"
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "enabledPlugins": {
+    "mattpocock-skills@claude-plugins-official": true
+  },
+  "language": "日本語",
+  "feedbackDrafts": "notify",
+  "tui": "fullscreen",
+  "timeFormat": "24-hour",
+  "theme": "dark",
+  "editorMode": "normal",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "remoteControlAtStartup": false,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
+}

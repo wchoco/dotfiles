@@ -21,6 +21,9 @@ link config/zsh/.zshrc "${HOME}/.zshrc"
 link config/vim/.vimrc "${HOME}/.vimrc"
 link config/git/config "${HOME}/.config/git/config"
 link config/git/ignore "${HOME}/.config/git/ignore"
+link config/zellij/config.kdl "${HOME}/.config/zellij/config.kdl"
+link config/claude/settings.json "${HOME}/.claude/settings.json"
+link config/claude/keybindings.json "${HOME}/.claude/keybindings.json"
 
 # ~/.gitconfig is read after ~/.config/git/config and would override it
 if [ -f "${HOME}/.gitconfig" ] && [ ! -L "${HOME}/.gitconfig" ]; then
