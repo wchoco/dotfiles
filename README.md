@@ -28,6 +28,23 @@ git clone git@github.com:wchoco/dotfiles.git ~/.config/dotfiles
 
 zsh の設定は `config/zsh/` 以下に分割している。`wsl.zsh` は WSL 上でのみ読み込む。
 
+## Windows（PowerShell）
+
+Windows では zellij の設定を Linux と共有する。PowerShell で次を実行する。
+
+```powershell
+winget install --id Zellij.Zellij -e
+git clone git@github.com:wchoco/dotfiles.git $HOME\.config\dotfiles
+& $HOME\.config\dotfiles\setup.ps1
+```
+
+`setup.ps1` は `$PROFILE.CurrentUserAllHosts` に `config/powershell/profile.ps1` を読み込む行を追加する（何度実行してもよい）。
+pwsh と Windows PowerShell はプロファイルの場所が別なので、使う方で実行する。
+スクリプトの実行が拒否される場合は `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` を実行する。
+
+`profile.ps1` の `zellij` 関数は、起動中の PowerShell を `SHELL` に、リポジトリの `config.kdl` を `ZELLIJ_CONFIG_FILE` に設定して zellij を起動する。
+`config.kdl` に `default_shell` を書くと Linux と Windows の両方に効くので、書かない。
+
 ## マシン固有の設定
 
 リポジトリに入れない設定は次のファイルに書く。
