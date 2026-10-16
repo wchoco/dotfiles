@@ -7,7 +7,6 @@ export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>."
 # alias
 alias vi="vim"
 alias tm="tmux"
-alias chrome="open -a \"/Applications/Google Chrome.app\""
 
 
 # function
@@ -20,7 +19,7 @@ function deref() {
 }
 
 function gitignore() {
-    curl -s https://www.gitignore.io/api/`echo "$*" | sed -e "s/ /,/"`
+    curl -sL https://www.toptal.com/developers/gitignore/api/`echo "$*" | sed -e "s/ /,/g"`
 }
 
 
@@ -40,7 +39,7 @@ setopt inc_append_history
 
 
 # ls
-alias ls="ls -GF --color=auto"
+alias ls="ls -F --color=auto"
 alias ll="ls -lah"
 alias l="/bin/ls"
 
