@@ -1,4 +1,5 @@
 # setup for Windows: load config/powershell/profile.ps1 from $PROFILE
+# powershell.exe -ExecutionPolicy Bypass -File setup.ps1
 param(
     [string]$ProfilePath = $PROFILE.CurrentUserAllHosts
 )
