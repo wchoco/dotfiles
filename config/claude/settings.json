@@ -1,4 +1,8 @@
 {
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "permissions": {
     "defaultMode": "auto"
   },
@@ -9,7 +13,11 @@
     "baseRef": "fresh"
   },
   "enabledPlugins": {
-    "mattpocock-skills@claude-plugins-official": true
+    "mattpocock-skills@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "claude-security@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true
   },
   "language": "日本語",
   "feedbackDrafts": "notify",
@@ -17,11 +25,9 @@
   "timeFormat": "24-hour",
   "theme": "dark",
   "editorMode": "normal",
+  "remoteControlAtStartup": false,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "remoteControlAtStartup": false,
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  }
+  "enableWorkflows": true,
+  "hooks": {"SessionStart":[{"matcher":"^(startup|resume|clear|compact|fork)$","hooks":[{"type":"command","command":"bash '/home/jiji/.claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]}
 }
